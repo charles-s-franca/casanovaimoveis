@@ -21,3 +21,4 @@ Route::get('user', function () {
 
 Route::get('user/profile', 'UserController@showProfile')->name('profile');
 Route::post('file/upload', 'UserController@upload')->name('upload');
+Route::post('file/save', 'UserController@save')->name('save');

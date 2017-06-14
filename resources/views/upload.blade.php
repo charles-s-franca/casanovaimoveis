@@ -19,11 +19,14 @@
             list-style-type: none;
         }
 
-        form.dropzone {
+        .dropform {
             min-height: 100px;
             border: 2px solid rgba(0, 0, 0, 0.3);
             background: white;
             padding: 0;
+        }
+        .dropzone-previews, .droppreview{
+            display: none;
         }
     </style>
 @endsection
@@ -35,24 +38,38 @@
 @endsection
 
 @section('content')
-
-    {{-- <form action="{{ url('file/upload') }}" method="post" class="dropzone" enctype="multipart/form-data">
+    <div class="droppreview">
+    </div>
+    <form action="{{ url('file/save')}}" method="post">
         {{ csrf_field() }}
-    </form> --}}
-
-    <ul id="sortable">
-        <li class="upload-box">
-            <form action="{{ url('file/upload') }}" class="dropzone" id="my-awesome-dropzone">
-                {{ csrf_field() }}
-            </form>
-        </li>
-    </ul>
-
+        <ul id="sortable">
+            <li class="upload-box">
+                <div class="dropform" id="dropbox">Arraste itens aqui ou clique para fazer o upload</div>
+            </li>
+        </ul>
+        <button>Enviar</button>
+    </form>
 @endsection
 
 @section('script')
     <script>
         var url = '{{ url('file/upload') }}'
+        $(function () {
+            $("#sortable").sortable();
+            $("#sortable").disableSelection();
+
+            // jQuery
+            $("#dropbox").dropzone(
+                { 
+                    url: url,
+                    complete: function(file){
+                        addNewDropzone(file);
+                        this.removeFile(file);
+                    }
+                , createImageThumbnails: false
+                , previewsContainer: false
+            });
+        });
     </script>
     <script src="{{ asset('/js/zone.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/upload.js') }}"></script>

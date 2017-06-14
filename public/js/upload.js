@@ -1,10 +1,4 @@
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-
-// Adiciona a imagem ao inicio da lista
+// Adiciona a imagem e o input hidden com o nome da imagem no drag and drop
 function addNewDropzone(file) {
     getBase64(file, function(imageurl){
         var li = $("<li />")
@@ -29,22 +23,7 @@ function addNewDropzone(file) {
     })
 }
 
-// "myAwesomeDropzone" is the camelized version of the HTML element's ID
-// Dropzone.options.myAwesomeDrop = {
-//     url: url,
-//     paramName: "file", // The name that will be used to transfer the file
-//     maxFilesize: 2, // MB
-//     accept: function (file, done) {
-//         addNewDropzone(file, done);
-//         this.removeFile(file);
-//     }, complete(param1, param2) {
-//         console.log(param1, param2);
-//     }, success: function(data){
-//         console.log(data);
-//     }
-// };
-
-// Pega o caminho base 64 da imagem para poder adicionala ao grid
+// Recupera o código base 64 que servira como "src" para o thumb da imagem exibido no drag and drop
 function getBase64(file, callback) {
     var reader = new FileReader();
     reader.readAsDataURL(file);
@@ -55,14 +34,3 @@ function getBase64(file, callback) {
         console.log('Error: ', error);
     };
 }
-
-// $(document).ready(function(){
-//     $("li.upload-box").dropzone({ 
-//         url: url,
-//         accept: function(file, done) {
-//             this.removeFile(file);
-//         }, success: function(){
-//             // alert("foi")
-//         }
-//     });
-// })
